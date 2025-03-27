@@ -1,0 +1,56 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 225 24% 12%;
+    --foreground: 0 0% 100%;
+
+    --card: 225 14% 19%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 225 14% 19%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 257 84% 75%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 10% 30%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 225 14% 25%;
+    --muted-foreground: 215 16% 70%;
+
+    --accent: 257 84% 75%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 225 14% 25%;
+    --input: 225 14% 25%;
+    --ring: 257 84% 75%;
+
+    --radius: 0.8rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-edu-dark text-foreground overflow-x-hidden;
+  }
+}
+
+/* Custom Progress Bar */
+.progress-bar {
+  @apply h-1.5 bg-edu-progress-bg rounded-full overflow-hidden;
+}
+
+.progress-bar-fill {
+  @apply h-full bg-edu-purple rounded-full;
+}
