@@ -367,7 +367,7 @@ const VoiceAssistant: React.FC = () => {
   
   return (
     <>
-      <div className="fixed bottom-20 right-8 z-50">
+      <div className="fixed bottom-32 right-8 z-50">
         <Button 
           onClick={toggleListening}
           className={`rounded-full h-14 w-14 shadow-lg transition-all duration-300 ${
