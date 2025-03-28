@@ -172,7 +172,7 @@ const AiChatBox: React.FC = () => {
       <button 
         onClick={() => setIsOpen(true)} 
         aria-label="Open AI Chat" 
-        className="fixed bottom-52 right-9 z-50 bg-edu-purple text-white rounded-full p-3 shadow-lg hover:bg-edu-purple-dark transition-colors"
+        className="fixed bottom-52 right-4 z-50 bg-edu-purple text-white rounded-full p-3 shadow-lg hover:bg-edu-purple-dark transition-colors"
       >
         <Sparkles size={isMobile ? 20 : 24} />
       </button>
