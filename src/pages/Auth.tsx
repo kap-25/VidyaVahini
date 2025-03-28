@@ -36,25 +36,24 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 const Auth: React.FC = () => {
-  const { user, signIn, signUp, resetPassword } = useAuth();
+  const { user, signIn, signUp, resetPassword, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('login');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
   const from = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    // If user is already logged in, redirect them
     if (user) {
       const userRole = user.user_metadata?.role;
-      
       if (userRole === 'teacher') {
-        navigate('/educator');
+        navigate('/educator', { replace: true });
       } else if (userRole === 'employer') {
-        navigate('/employer');
+        navigate('/employer', { replace: true });
       } else {
-        navigate('/student');
+        navigate('/student', { replace: true });
       }
     }
   }, [user, navigate]);
@@ -89,14 +88,15 @@ const Auth: React.FC = () => {
 
   const handleLogin = async (values: LoginFormValues) => {
     setIsLoading(true);
+    setError(null);
     try {
       const { success, error } = await signIn(values.email, values.password);
       
       if (!success) {
-        console.error(error || 'Failed to login');
+        setError(error || 'Failed to login');
       }
-    } catch (error) {
-      console.error('An unexpected error occurred', error);
+    } catch (error: any) {
+      setError(error.message || 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -141,6 +141,15 @@ const Auth: React.FC = () => {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate('/', { replace: true });
+    } catch (error: any) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'student':
@@ -171,6 +180,11 @@ const Auth: React.FC = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {error && (
+              <div className="mb-4 p-3 text-sm text-red-500 bg-red-100 rounded">
+                {error}
+              </div>
+            )}
             <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="grid grid-cols-3 mb-6">
                 <TabsTrigger value="login">
