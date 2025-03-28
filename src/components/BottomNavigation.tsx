@@ -80,12 +80,6 @@ const BottomNavigation: React.FC = () => {
           );
         })}
         
-        {!isEmployer && (
-          <div className="flex flex-col items-center justify-center px-1 py-1">
-            <TranslateButton variant="ghost" size="icon" className="mb-1 text-muted-foreground hover:text-edu-purple" />
-            <span className="text-xs font-medium text-muted-foreground">Language</span>
-          </div>
-        )}
       </div>
     </div>
   );
