@@ -43,7 +43,6 @@ const BottomNavigation: React.FC = () => {
       { icon: <BookOpen size={22} />, label: 'Courses', path: '/courses' },
       { icon: <Bot size={22} />, label: 'AI Tutor', path: '/edu-chat' },
       { icon: <Briefcase size={22} />, label: 'Jobs', path: '/jobs' },
-      { icon: <LayoutDashboard size={22} />, label: 'Dashboard', path: '/student-dashboard' },
       { icon: <User size={22} />, label: 'Profile', path: '/student-profile' },
     ];
   } else {
