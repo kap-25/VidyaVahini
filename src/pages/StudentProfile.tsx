@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -6,10 +5,51 @@ import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { LogOut, Loader2, Edit } from 'lucide-react';
+import { LogOut, Loader2, Edit, Bell, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FullLanguageSwitcher from '@/components/FullLanguageSwitcher';
 import { T } from '@/components/T';
+import { toast } from 'sonner';
+
+export const reminderMessages = [
+  {
+    title: "Time to Level Up! 🎮",
+    body: "Your brain is like a muscle - it needs daily training! Let's make it stronger! 💪"
+  },
+  {
+    title: "Knowledge is Power! ⚡",
+    body: "Every minute you study is a step closer to your goals. You've got this! 🚀"
+  },
+  {
+    title: "Study Time! 📚",
+    body: "Your future self will thank you for studying now. Let's make it happen! 🌟"
+  },
+  {
+    title: "Brain Exercise Time! 🧠",
+    body: "Just like your body, your mind needs regular exercise. Time to flex those mental muscles! 💪"
+  },
+  {
+    title: "Learning Adventure Awaits! 🗺️",
+    body: "Every study session is a new adventure in knowledge. Ready to explore? 🚀"
+  },
+  {
+    title: "Time to Shine! ✨",
+    body: "Your potential is limitless. Let's unlock it one study session at a time! 🌟"
+  },
+  {
+    title: "Study Mode: Activated! 🎯",
+    body: "Success is built one study session at a time. Let's make today count! 💫"
+  },
+  {
+    title: "Knowledge Check! 📖",
+    body: "Your brain is hungry for knowledge. Time to feed it! 🧠"
+  }
+];
+
+const getRandomMessage = () => {
+  const randomIndex = Math.floor(Math.random() * reminderMessages.length);
+  return reminderMessages[randomIndex];
+};
 
 const StudentProfile = () => {
   const { user, signOut } = useAuth();
@@ -17,6 +57,8 @@ const StudentProfile = () => {
   const [loading, setLoading] = useState(true);
   const [enrolledCourses, setEnrolledCourses] = useState<any[]>([]);
   const [completedCourses, setCompletedCourses] = useState(0);
+  const [reminderTime, setReminderTime] = useState(localStorage.getItem('reminderTime') || '');
+  const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
   
   useEffect(() => {
     if (!user) return;
@@ -45,7 +87,53 @@ const StudentProfile = () => {
     };
     
     fetchStudentData();
+    requestNotificationPermission();
   }, [user]);
+
+  const requestNotificationPermission = async () => {
+    try {
+      const permission = await Notification.requestPermission();
+      setNotificationPermission(permission);
+      if (permission === 'granted') {
+        toast.success('Notifications enabled! You\'ll receive study reminders.');
+      }
+    } catch (error) {
+      console.error('Error requesting notification permission:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!reminderTime || notificationPermission !== 'granted') return;
+
+    const checkReminder = setInterval(() => {
+      const now = new Date();
+      const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+      if (currentTime === reminderTime) {
+        const message = getRandomMessage();
+        new Notification(message.title, {
+          body: message.body,
+          icon: '/favicon.ico',
+          badge: '/favicon.ico',
+          tag: 'study-reminder',
+        });
+      }
+    }, 60000); // Check every minute
+
+    return () => clearInterval(checkReminder);
+  }, [reminderTime, notificationPermission]);
+
+  const handleReminderChange = (event) => {
+    const time = event.target.value;
+    setReminderTime(time);
+    localStorage.setItem('reminderTime', time);
+
+    if (time) {
+      toast.success(`Study reminder set for ${time} every day! 📚`);
+    } else {
+      toast.info('Study reminder disabled');
+    }
+  };
   
   const handleSignOut = async () => {
     try {
@@ -102,6 +190,36 @@ const StudentProfile = () => {
               <p className="text-sm text-green-400 mb-1"><T>Completed</T></p>
               <p className="text-2xl font-bold">{completedCourses}</p>
             </Card>
+          </div>
+
+          {/* Added Reminder Section */}
+          <div className="mb-6 bg-edu-dark/30 p-4 rounded-lg">
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-sm font-medium flex items-center">
+                <Bell className="mr-2 text-white h-5 w-5" /> <T>Daily Study Reminder</T>
+              </label>
+              {notificationPermission !== 'granted' && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={requestNotificationPermission}
+                  className="text-xs text-edu-purple hover:text-edu-purple/80"
+                >
+                  <T>Enable Notifications</T>
+                </Button>
+              )}
+            </div>
+            <input
+              type="time"
+              value={reminderTime}
+              onChange={handleReminderChange}
+              className="w-full p-2 bg-edu-dark border border-gray-600 rounded mt-2"
+            />
+            <p className="text-xs text-gray-400 mt-2">
+              {reminderTime
+                ? <T>{`You'll receive a study reminder at ${reminderTime} every day`}</T>
+                : <T>Set a time to receive daily study reminders</T>}
+            </p>
           </div>
           
           <div className="mb-6">
