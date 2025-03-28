@@ -4,7 +4,6 @@ import { Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useLanguage, languages } from '@/context/LanguageContext';
-import { toast } from 'sonner';
 
 interface LanguageSelectorProps {
   className?: string;
@@ -18,9 +17,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className }) => {
     setLanguage(langCode);
     setOpen(false);
     
-    // Get language name from the languages array
-    const langName = languages.find(l => l.code === langCode)?.name || langCode;
-    toast.success(`Language changed to ${langName}`);
+    // Log language change but don't show toast
+    console.log(`Language changed to ${langCode}`);
   };
 
   return (

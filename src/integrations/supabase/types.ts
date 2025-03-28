@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      ai_chat_conversations: {
+        Row: {
+          created_at: string
+          feedback: number | null
+          id: string
+          message: string
+          metadata: Json | null
+          response: string
+          subject: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feedback?: number | null
+          id?: string
+          message: string
+          metadata?: Json | null
+          response: string
+          subject?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feedback?: number | null
+          id?: string
+          message?: string
+          metadata?: Json | null
+          response?: string
+          subject?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       course_materials: {
         Row: {
           course_id: string
@@ -83,6 +116,150 @@ export type Database = {
           modules?: Json | null
           title?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      employer_notifications: {
+        Row: {
+          created_at: string
+          employer_id: string
+          id: string
+          job_id: string
+          message: string
+          read: boolean
+          student_id: string
+        }
+        Insert: {
+          created_at?: string
+          employer_id: string
+          id?: string
+          job_id: string
+          message: string
+          read?: boolean
+          student_id: string
+        }
+        Update: {
+          created_at?: string
+          employer_id?: string
+          id?: string
+          job_id?: string
+          message?: string
+          read?: boolean
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employer_notifications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "job_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_alerts: {
+        Row: {
+          created_at: string | null
+          id: string
+          job_id: string | null
+          read: boolean | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          job_id?: string | null
+          read?: boolean | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          job_id?: string | null
+          read?: boolean | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_alerts_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "job_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_applications: {
+        Row: {
+          applied_at: string
+          id: string
+          job_id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string
+          id?: string
+          job_id: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          applied_at?: string
+          id?: string
+          job_id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "job_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_materials: {
+        Row: {
+          application_url: string | null
+          company: string
+          created_at: string
+          created_by: string
+          deadline: string | null
+          description: string
+          id: string
+          location: string | null
+          requirements: string | null
+          title: string
+          type: string
+        }
+        Insert: {
+          application_url?: string | null
+          company: string
+          created_at?: string
+          created_by: string
+          deadline?: string | null
+          description: string
+          id?: string
+          location?: string | null
+          requirements?: string | null
+          title: string
+          type: string
+        }
+        Update: {
+          application_url?: string | null
+          company?: string
+          created_at?: string
+          created_by?: string
+          deadline?: string | null
+          description?: string
+          id?: string
+          location?: string | null
+          requirements?: string | null
+          title?: string
+          type?: string
         }
         Relationships: []
       }
@@ -186,10 +363,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_recent_conversations: {
+        Args: {
+          p_user_id: string
+          p_limit?: number
+        }
+        Returns: {
+          id: string
+          message: string
+          response: string
+          created_at: string
+          subject: string
+          feedback: number
+          metadata: Json
+        }[]
+      }
     }
     Enums: {
-      [_ in never]: never
+      user_role: "student" | "teacher" | "employer"
     }
     CompositeTypes: {
       [_ in never]: never

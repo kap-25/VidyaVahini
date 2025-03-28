@@ -6,7 +6,6 @@ import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Button } from '@/components/ui/button';
 import { LogOut, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
 
 const Profile = () => {
   const { user, signOut, loading } = useAuth();
@@ -27,11 +26,9 @@ const Profile = () => {
   const handleSignOut = async () => {
     try {
       await signOut();
-      toast.success('Signed out successfully');
       navigate('/auth');
     } catch (error) {
       console.error('Sign out error:', error);
-      toast.error('Failed to sign out');
     }
   };
 

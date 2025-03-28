@@ -1,5 +1,6 @@
+
 // Service Worker version
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `eduforall-cache-${CACHE_VERSION}`;
 
 // Assets to cache
@@ -7,7 +8,11 @@ const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/favicon.ico'
+  '/favicon.ico',
+  '/jobs',
+  '/courses',
+  '/explore',
+  '/edu-chat'
 ];
 
 // Install event - cache assets
@@ -40,7 +45,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache or network
+// Fetch event - serve from cache or network with improved strategy
 self.addEventListener('fetch', (event) => {
   // Only cache GET requests
   if (event.request.method !== 'GET') return;
@@ -48,11 +53,43 @@ self.addEventListener('fetch', (event) => {
   // Skip non-HTTP requests
   if (!event.request.url.startsWith('http')) return;
   
+  // Network-first strategy for API requests
+  if (event.request.url.includes('/api/') || event.request.url.includes('supabase')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseClone);
+          });
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+  
+  // Cache-first strategy for static assets
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
         // Return cached response if found
         if (cachedResponse) {
+          // In the background, fetch and update cache
+          fetch(event.request)
+            .then(response => {
+              if (!response || response.status !== 200 || response.type !== 'basic') return;
+              
+              const responseToCache = response.clone();
+              caches.open(CACHE_NAME)
+                .then(cache => {
+                  cache.put(event.request, responseToCache);
+                });
+            })
+            .catch(() => {});
+            
           return cachedResponse;
         }
         
@@ -74,13 +111,13 @@ self.addEventListener('fetch', (event) => {
               });
             
             return response;
+          })
+          .catch(() => {
+            // Fallback for offline mode
+            if (event.request.mode === 'navigate') {
+              return caches.match('/');
+            }
           });
-      })
-      .catch(() => {
-        // Fallback for offline mode
-        if (event.request.mode === 'navigate') {
-          return caches.match('/');
-        }
       })
   );
 });
@@ -95,6 +132,7 @@ self.addEventListener('push', (event) => {
         body: data.body,
         icon: '/icons/icon-192x192.png',
         badge: '/icons/badge-72x72.png',
+        vibrate: [100, 50, 100],
         data: {
           url: data.url || '/'
         }
@@ -125,4 +163,21 @@ self.addEventListener('notificationclick', (event) => {
         }
       })
   );
+});
+
+// Handle connectivity changes to update the UI accordingly
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'CONNECTIVITY_CHANGE') {
+    const isOnline = event.data.isOnline;
+    
+    // Notify all clients about the connectivity change
+    self.clients.matchAll().then(clients => {
+      clients.forEach(client => {
+        client.postMessage({
+          type: 'CONNECTIVITY_STATUS',
+          isOnline: isOnline
+        });
+      });
+    });
+  }
 });

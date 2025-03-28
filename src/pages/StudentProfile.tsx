@@ -6,8 +6,7 @@ import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { LogOut, Loader2, Edit, CheckCircle } from 'lucide-react';
-import { toast } from 'sonner';
+import { LogOut, Loader2, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FullLanguageSwitcher from '@/components/FullLanguageSwitcher';
 import { T } from '@/components/T';
@@ -40,7 +39,6 @@ const StudentProfile = () => {
         
       } catch (error: any) {
         console.error('Error fetching student data:', error.message);
-        toast.error('Failed to load profile data');
       } finally {
         setLoading(false);
       }
@@ -52,10 +50,8 @@ const StudentProfile = () => {
   const handleSignOut = async () => {
     try {
       await signOut();
-      toast.success('Signed out successfully');
     } catch (error) {
       console.error('Sign out error:', error);
-      toast.error('Failed to sign out');
     }
   };
   
@@ -80,7 +76,7 @@ const StudentProfile = () => {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                onClick={() => toast.info('Edit profile feature coming soon')}
+                onClick={() => console.info('Edit profile feature coming soon')}
               >
                 <Edit className="h-4 w-4" />
               </Button>

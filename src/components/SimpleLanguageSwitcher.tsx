@@ -2,7 +2,6 @@
 import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 
 export const SimpleLanguageSwitcher: React.FC = () => {
   const { language, setLanguage } = useLanguage();
@@ -10,29 +9,8 @@ export const SimpleLanguageSwitcher: React.FC = () => {
   const handleLanguageChange = (langCode: string) => {
     setLanguage(langCode);
     
-    // Show a toast notification when language is changed
-    const languageNames = {
-      'en': 'English',
-      'hi': 'Hindi',
-      'mr': 'Marathi',
-      'bn': 'Bengali', 
-      'ta': 'Tamil',
-      'te': 'Telugu',
-      'kn': 'Kannada',
-      'ml': 'Malayalam',
-      'pa': 'Punjabi',
-      'gu': 'Gujarati',
-      'es': 'Spanish',
-      'fr': 'French',
-      'zh': 'Chinese',
-      'ar': 'Arabic',
-      'ru': 'Russian',
-      'pt': 'Portuguese',
-      'de': 'German',
-      'ja': 'Japanese'
-    };
-    
-    toast.success(`Language changed to ${languageNames[langCode as keyof typeof languageNames]}`);
+    // Log language change but don't toast
+    console.log(`Language changed to ${langCode}`);
   };
   
   return (

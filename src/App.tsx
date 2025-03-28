@@ -15,10 +15,15 @@ import EducatorDashboard from '@/pages/EducatorDashboard';
 import Profile from '@/pages/Profile';
 import StudentProfile from '@/pages/StudentProfile';
 import EducatorProfile from '@/pages/EducatorProfile';
+import EmployerProfile from '@/pages/EmployerProfile';
 import StudentIndex from '@/pages/StudentIndex';
 import EducatorIndex from '@/pages/EducatorIndex';
+import EmployerIndex from '@/pages/EmployerIndex';
 import MainIndex from '@/pages/MainIndex';
 import EducationalChatbot from '@/pages/EducationalChatbot';
+import JobsPage from '@/pages/JobsPage';
+import EmployerNotifications from '@/pages/EmployerNotifications';
+import EmployerApplicants from '@/pages/EmployerApplicants';
 import './App.css';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -36,34 +41,45 @@ function App() {
         <LanguageProvider>
           <TranslationWrapper>
             <Routes>
+              {/* Common Routes */}
               <Route path="/" element={<Index />} />
               <Route path="/main" element={<MainIndex />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+              
+              {/* Student & Educator Routes */}
               <Route path="/courses" element={<CourseCatalog />} />
               <Route path="/courses/:id" element={<CourseDetails />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/edu-chat" element={<EducationalChatbot />} />
-              <Route path="*" element={<NotFound />} />
-              
-              <Route path="/dashboard" element={<PrivateRoute><StudentDashboard /></PrivateRoute>} />
               <Route path="/student-dashboard" element={<PrivateRoute><StudentDashboard /></PrivateRoute>} />
               <Route path="/educator-dashboard" element={<PrivateRoute><EducatorDashboard /></PrivateRoute>} />
-              <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
               <Route path="/student-profile" element={<PrivateRoute><StudentProfile /></PrivateRoute>} />
               <Route path="/educator-profile" element={<PrivateRoute><EducatorProfile /></PrivateRoute>} />
               <Route path="/my-courses" element={<PrivateRoute><MyCourses /></PrivateRoute>} />
               <Route path="/student" element={<PrivateRoute><StudentIndex /></PrivateRoute>} />
               <Route path="/educator" element={<PrivateRoute><EducatorIndex /></PrivateRoute>} />
               <Route path="/courses/:id/learn" element={<PrivateRoute><CourseLearn /></PrivateRoute>} />
-              
               <Route path="/courses/:id/edit-content" element={<PrivateRoute><CourseContentEditor /></PrivateRoute>} />
               <Route path="/courses/:id/edit" element={<PrivateRoute><CourseContentEditor /></PrivateRoute>} />
               <Route path="/courses/:id/edit-learn" element={<PrivateRoute><CourseLearnEdit /></PrivateRoute>} />
+              
+              {/* Job Routes (accessible by students and employers) */}
+              <Route path="/jobs" element={<JobsPage />} />
+              
+              {/* Employer-specific Routes */}
+              <Route path="/employer" element={<PrivateRoute><EmployerIndex /></PrivateRoute>} />
+              <Route path="/employer-jobs" element={<PrivateRoute><JobsPage /></PrivateRoute>} />
+              <Route path="/employer-notifications" element={<PrivateRoute><EmployerNotifications /></PrivateRoute>} />
+              <Route path="/employer-profile" element={<PrivateRoute><EmployerProfile /></PrivateRoute>} />
+              <Route path="/employer-applicants" element={<PrivateRoute><EmployerApplicants /></PrivateRoute>} />
             </Routes>
             
             <Toaster />
             <SonnerToaster position="top-right" expand={true} richColors />
             <VoiceAssistant />
+            <AiChatBox />
           </TranslationWrapper>
         </LanguageProvider>
       </AuthProvider>

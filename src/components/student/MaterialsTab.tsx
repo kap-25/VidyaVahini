@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { File, FileText, Film, Search, Download } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/context/AuthContext';
-import { useToast } from "@/hooks/use-toast";
 
 interface Material {
   id: string;
@@ -20,7 +19,6 @@ interface Material {
 
 const MaterialsTab = () => {
   const { user } = useAuth();
-  const { toast } = useToast();
   const [materials, setMaterials] = useState<Material[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
@@ -42,18 +40,6 @@ const MaterialsTab = () => {
           
           // Update the materials list after a change is detected
           fetchMaterials();
-          
-          if (payload.eventType === 'INSERT') {
-            toast({
-              title: "New Material Available",
-              description: `A new resource has been added to one of your courses`,
-            });
-          } else if (payload.eventType === 'UPDATE') {
-            toast({
-              title: "Material Updated",
-              description: "A course resource has been updated",
-            });
-          }
         }
       )
       .subscribe();
@@ -100,11 +86,6 @@ const MaterialsTab = () => {
       setMaterials(transformedData);
     } catch (error) {
       console.error('Error fetching materials:', error);
-      toast({
-        title: "Error loading materials",
-        description: error.message,
-        variant: "destructive",
-      });
     } finally {
       setLoading(false);
     }
@@ -142,17 +123,9 @@ const MaterialsTab = () => {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
       
-      toast({
-        title: "Download Started",
-        description: `Downloading ${fileName}`,
-      });
+      console.log(`Downloading ${fileName}`);
     } catch (error) {
       console.error('Error downloading file:', error);
-      toast({
-        title: "Download Failed",
-        description: error.message,
-        variant: "destructive",
-      });
     }
   };
 

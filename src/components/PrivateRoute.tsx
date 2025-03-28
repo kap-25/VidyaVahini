@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface PrivateRouteProps {
   children: React.ReactNode;
@@ -26,12 +25,9 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, publicRoute = fal
   }, [user, loading]);
 
   useEffect(() => {
-    // Show authentication errors
+    // Only log authentication errors, no toasts
     if (!loading && !user && !publicRoute) {
-      toast.error('Authentication required. Please sign in.', {
-        id: 'auth-required',
-        duration: 3000,
-      });
+      console.log('Authentication required. Please sign in.');
     }
   }, [loading, user, publicRoute, location.pathname]);
 

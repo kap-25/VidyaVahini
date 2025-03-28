@@ -19,14 +19,15 @@ import TranslateButton from './TranslateButton';
 interface HeaderProps {
   className?: string;
   showBackButton?: boolean;
+  children?: React.ReactNode;
 }
 
-const Header: React.FC<HeaderProps> = ({ className = '', showBackButton = false }) => {
+const Header: React.FC<HeaderProps> = ({ className = '', showBackButton = false, children }) => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
   return (
-    <header className={`flex items-center justify-between py-3 ${className}`}>
+    <header className={`flex items-center justify-between py-3 px-4 ${className}`}>
       <div className="flex items-center">
         {showBackButton && (
           <Button 
@@ -40,6 +41,8 @@ const Header: React.FC<HeaderProps> = ({ className = '', showBackButton = false 
         )}
         <Logo />
       </div>
+      
+      {children && <div className="mx-auto">{children}</div>}
       
       <div className="flex items-center space-x-2">
         <TranslateButton variant="ghost" size="icon" />

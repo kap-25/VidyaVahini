@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useLanguage, languages } from '@/context/LanguageContext';
-import { toast } from 'sonner';
 
 interface TranslateButtonProps {
   variant?: 'default' | 'outline' | 'ghost' | 'link';
@@ -28,10 +27,7 @@ const TranslateButton: React.FC<TranslateButtonProps> = ({
     if (langCode === language) return;
     
     setLanguage(langCode);
-    
-    // Get language name for the toast
-    const languageName = languages.find(l => l.code === langCode)?.name || langCode;
-    toast.success(`Language changed to ${languageName}`);
+    console.log(`Language changed to ${langCode}`);
   };
   
   return (

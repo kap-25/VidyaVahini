@@ -17,6 +17,8 @@ const Index = () => {
       
       if (userRole === 'teacher') {
         navigate('/educator', { replace: true });
+      } else if (userRole === 'employer') {
+        navigate('/employer', { replace: true });
       } else {
         navigate('/student', { replace: true });
       }

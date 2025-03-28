@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, Save, Trash2, Upload, X, FileText, Film, Youtube } from 'lucide-react';
+import { Plus, Trash2, Upload, X, FileText, Film, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -139,7 +138,7 @@ const CourseContentEditor = () => {
       setIsCreator(isCreator);
       
       if (!isCreator) {
-        toast.error("You don't have permission to edit this course");
+        console.error("You don't have permission to edit this course");
         navigate(`/courses/${id}`);
         return;
       }
@@ -157,7 +156,6 @@ const CourseContentEditor = () => {
       
     } catch (error: any) {
       console.error('Error fetching course details:', error.message);
-      toast.error('Failed to load course details');
     } finally {
       setLoading(false);
     }
@@ -213,14 +211,14 @@ const CourseContentEditor = () => {
         
         if (error) throw error;
         
-        toast.success("Material updated successfully");
+        console.log("Material updated successfully");
         setShowAddMaterialDialog(false);
         fetchCourseDetails();
         return;
       }
       
       if (!selectedFile) {
-        toast.error("Please select a file to upload");
+        console.error("Please select a file to upload");
         return;
       }
       
@@ -256,14 +254,13 @@ const CourseContentEditor = () => {
       
       if (insertError) throw insertError;
       
-      toast.success("Material added successfully");
+      console.log("Material added successfully");
       setShowAddMaterialDialog(false);
       setSelectedFile(null);
       fetchCourseDetails();
       
     } catch (error: any) {
       console.error('Error uploading material:', error.message);
-      toast.error('Failed to upload material');
     } finally {
       setUploadLoading(false);
     }
@@ -289,7 +286,7 @@ const CourseContentEditor = () => {
         
         if (error) throw error;
         
-        toast.success("YouTube video updated successfully");
+        console.log("YouTube video updated successfully");
         setShowAddMaterialDialog(false);
         fetchCourseDetails();
         return;
@@ -311,13 +308,12 @@ const CourseContentEditor = () => {
       
       if (insertError) throw insertError;
       
-      toast.success("YouTube video added successfully");
+      console.log("YouTube video added successfully");
       setShowAddMaterialDialog(false);
       fetchCourseDetails();
       
     } catch (error: any) {
       console.error('Error adding YouTube video:', error.message);
-      toast.error('Failed to add YouTube video');
     } finally {
       setUploadLoading(false);
     }
@@ -346,12 +342,11 @@ const CourseContentEditor = () => {
       
       if (deleteRecordError) throw deleteRecordError;
       
-      toast.success("Material deleted successfully");
+      console.log("Material deleted successfully");
       fetchCourseDetails();
       
     } catch (error: any) {
       console.error('Error deleting material:', error.message);
-      toast.error('Failed to delete material');
     }
   };
 

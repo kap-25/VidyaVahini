@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Globe } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface FullLanguageSwitcherProps {
   variant?: 'default' | 'outline' | 'ghost';
@@ -31,9 +30,8 @@ const FullLanguageSwitcher: React.FC<FullLanguageSwitcherProps> = ({
     setLanguage(langCode);
     setOpen(false);
     
-    // Get language name for the toast
-    const langName = languages.find(l => l.code === langCode)?.name || langCode;
-    toast.success(`Language changed to ${langName}`);
+    // Log language change but don't toast
+    console.log(`Language changed to ${langCode}`);
   };
   
   return (

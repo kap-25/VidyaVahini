@@ -10,6 +10,7 @@ interface Window {
     GOOGLE_TRANSLATE_API_KEY?: string;
     [key: string]: string | undefined;
   };
+  deferredPrompt?: BeforeInstallPromptEvent;
 }
 
 interface SpeechRecognition extends EventTarget {
@@ -40,4 +41,16 @@ interface ServiceWorkerRegistration {
   update(): void;
   unregister(): Promise<boolean>;
   showNotification(title: string, options?: NotificationOptions): Promise<void>;
+  installing: ServiceWorker | null;
+  waiting: ServiceWorker | null;
+  active: ServiceWorker | null;
+  addEventListener(type: string, listener: EventListener): void;
+}
+
+// ServiceWorker type
+interface ServiceWorker extends EventTarget {
+  scriptURL: string;
+  state: 'installing' | 'installed' | 'activating' | 'activated' | 'redundant';
+  postMessage(message: any): void;
+  addEventListener(type: string, listener: EventListener): void;
 }
