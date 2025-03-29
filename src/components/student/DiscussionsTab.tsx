@@ -23,7 +23,7 @@ const DiscussionsTab: React.FC<DiscussionsTabProps> = ({ discussions }) => {
   return (
     <div className="space-y-4">
       <Card className="bg-edu-card-bg border-none">
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-row-2 items-center justify-between">
           <div>
             <CardTitle><T>Study Groups & Discussions</T></CardTitle>
             <CardDescription className="text-gray-400"><T>Connect with peers and discuss course content</T></CardDescription>
@@ -46,7 +46,7 @@ const DiscussionsTab: React.FC<DiscussionsTabProps> = ({ discussions }) => {
                     {discussion.lastActive}
                   </span>
                 </div>
-                <div className="mt-3 flex gap-2 justify-end">
+                <div className="mt-3 flex gap-2 justify-center">
                   <Button 
                     size="sm" 
                     variant="outline"
@@ -71,7 +71,7 @@ const DiscussionsTab: React.FC<DiscussionsTabProps> = ({ discussions }) => {
             <div className="p-4 bg-edu-dark/30 rounded-lg flex flex-col items-center">
               <User size={24} className="text-edu-purple mb-2" />
               <h3 className="font-medium text-center"><T>Study Buddies</T></h3>
-              <p className="text-xs text-gray-400 mt-1"><T>connections</T>: 12</p>
+              <p className="text-xs mb-4 text-gray-400 mt-1"><T>connections</T>: 12</p>
               <Button variant="outline" size="sm" className="mt-2">
                 <T>View Network</T>
               </Button>
