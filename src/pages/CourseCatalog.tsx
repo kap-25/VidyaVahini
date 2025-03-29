@@ -75,8 +75,7 @@ const CourseCatalog = () => {
         />
         
         <Tabs defaultValue="explore" value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-edu-card-bg mb-4">
-            <TabsTrigger value="explore">Explore</TabsTrigger>
+          <TabsList className="bg-edu-card-bg mb-4">
             <TabsTrigger value="search">Search Results</TabsTrigger>
           </TabsList>
           
