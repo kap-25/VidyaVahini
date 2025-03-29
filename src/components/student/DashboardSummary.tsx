@@ -22,9 +22,9 @@ interface DashboardSummaryProps {
   }>;
 }
 
-const DashboardSummary: React.FC<DashboardSummaryProps> = ({ 
-  recentCourses, 
-  upcomingAssignments 
+const DashboardSummary: React.FC<DashboardSummaryProps> = ({
+  recentCourses,
+  upcomingAssignments
 }) => {
   const { translateBatch } = useLanguage();
   const [translatedTexts, setTranslatedTexts] = useState<Record<string, string>>({
@@ -37,33 +37,33 @@ const DashboardSummary: React.FC<DashboardSummaryProps> = ({
     noAssignments: "No upcoming assignments",
     due: "Due"
   });
-  
+
   // Preload all translations at once using batch translation
   useEffect(() => {
     const translateAllTexts = async () => {
       const keys = Object.keys(translatedTexts);
       const values = Object.values(translatedTexts);
-      
+
       try {
         const translatedValues = await translateBatch(values);
-        
+
         const newTranslatedTexts: Record<string, string> = {};
         keys.forEach((key, index) => {
           newTranslatedTexts[key] = translatedValues[index];
         });
-        
+
         setTranslatedTexts(newTranslatedTexts);
       } catch (error) {
         console.error('Error translating dashboard texts:', error);
       }
     };
-    
+
     translateAllTexts();
   }, [translateBatch]);
-  
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-center gap-4">
         <h2 className="text-xl font-bold">{translatedTexts.dashboardOverview}</h2>
         <Link to="/student-dashboard">
           <Button variant="outline" size="sm" className="text-edu-purple border-edu-purple hover:bg-edu-purple/10">
@@ -71,7 +71,8 @@ const DashboardSummary: React.FC<DashboardSummaryProps> = ({
           </Button>
         </Link>
       </div>
-      
+
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Recent Courses */}
         <Card className="bg-edu-card-bg border-edu-card-border">
@@ -80,7 +81,7 @@ const DashboardSummary: React.FC<DashboardSummaryProps> = ({
               <BookOpen className="w-5 h-5 mr-2 text-edu-purple" />
               <h3 className="font-semibold">{translatedTexts.recentCourses}</h3>
             </div>
-            
+
             {recentCourses.length > 0 ? (
               <ul className="space-y-3">
                 {recentCourses.slice(0, 2).map(course => (
@@ -105,7 +106,7 @@ const DashboardSummary: React.FC<DashboardSummaryProps> = ({
             )}
           </CardContent>
         </Card>
-        
+
         {/* Upcoming Assignments */}
         <Card className="bg-edu-card-bg border-edu-card-border">
           <CardContent className="p-4">
@@ -113,7 +114,7 @@ const DashboardSummary: React.FC<DashboardSummaryProps> = ({
               <FileText className="w-5 h-5 mr-2 text-edu-purple" />
               <h3 className="font-semibold">{translatedTexts.upcomingAssignments}</h3>
             </div>
-            
+
             {upcomingAssignments.length > 0 ? (
               <ul className="space-y-3">
                 {upcomingAssignments.slice(0, 2).map(assignment => (
