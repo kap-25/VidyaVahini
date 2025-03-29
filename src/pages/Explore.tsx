@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -348,67 +347,70 @@ const Explore = () => {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div className="flex items-center gap-4 text-sm text-gray-400">
                           <BookOpen size={14} />
                           <span>Course</span>
                           
                           {course.created_by && (
-                            <div className="flex items-center ml-2">
-                              <span className="mx-1">•</span>
-                              <Users size={14} className="mr-1" />
-                              <span>By {creatorUsernames[course.created_by] || 'Unknown Teacher'}</span>
+                            <div className="flex items-center">
+                              <Users size={14} />
+                              <span>
+                                By {creatorUsernames[course.created_by] || 'Unknown Teacher'}
+                              </span>
                             </div>
                           )}
                         </div>
                         
-                        {user?.user_metadata?.role === 'teacher' && course.created_by === user.id ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-edu-purple border-edu-purple"
-                            asChild
-                          >
-                            <Link to={`/courses/${course.id}/edit-learn`}>
-                              <Edit size={14} className="mr-1" />
-                              Edit Course
-                            </Link>
-                          </Button>
-                        ) : course.isEnrolled ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-edu-purple border-edu-purple"
-                            asChild
-                          >
-                            <Link to={`/courses/${course.id}/learn`}>
-                              Continue Learning
-                            </Link>
-                          </Button>
-                        ) : (
-                          <div className="flex gap-2">
+                        <div className="flex justify-center">
+                          {user?.user_metadata?.role === 'teacher' && course.created_by === user.id ? (
                             <Button
                               variant="outline"
                               size="sm"
                               className="text-edu-purple border-edu-purple"
                               asChild
                             >
-                              <Link to={`/courses/${course.id}`}>
-                                <BookMarked size={14} className="mr-1" />
-                                Preview
+                              <Link to={`/courses/${course.id}/edit-learn`}>
+                                <Edit size={14} className="mr-1" />
+                                Edit Course
                               </Link>
                             </Button>
+                          ) : course.isEnrolled ? (
                             <Button
-                              variant="default"
+                              variant="outline"
                               size="sm"
-                              className="bg-edu-purple hover:bg-edu-purple-light"
-                              onClick={() => handleEnrollCourse(course.id)}
-                              disabled={enrollingCourseId === course.id}
+                              className="text-edu-purple border-edu-purple"
+                              asChild
                             >
-                              {enrollingCourseId === course.id ? 'Enrolling...' : 'Enroll'}
+                              <Link to={`/courses/${course.id}/learn`}>
+                                Continue Learning
+                              </Link>
                             </Button>
-                          </div>
-                        )}
+                          ) : (
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-edu-purple border-edu-purple"
+                                asChild
+                              >
+                                <Link to={`/courses/${course.id}`}>
+                                  <BookMarked size={14} className="mr-1" />
+                                  Preview
+                                </Link>
+                              </Button>
+                              <Button
+                                variant="default"
+                                size="sm"
+                                className="bg-edu-purple hover:bg-edu-purple-light"
+                                onClick={() => handleEnrollCourse(course.id)}
+                                disabled={enrollingCourseId === course.id}
+                              >
+                                {enrollingCourseId === course.id ? 'Enrolling...' : 'Enroll'}
+                              </Button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
