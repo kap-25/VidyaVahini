@@ -20,12 +20,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ title, description, c
       <Header />
       
       {/* Dashboard Title with Language Switcher */}
-      <div className={`bg-gradient-to-r from-edu-purple-dark to-edu-purple rounded-xl p-5 mb-8 ${className || ''}`}>
+      <div className={`bg-gradient-to-r from-edu-purple-dark to-edu-purple rounded-xl p-5 mb-6 ${className || ''}`}>
         <div className="flex justify-between items-start mb-2">
           <h1 className="text-2xl font-bold">{translatedTitle}</h1>
-          <div className="flex space-x-2">
-            <TranslateButton variant="ghost" size="sm" />
-          </div>
         </div>
         <p className="text-white/80">{translatedDescription}</p>
         <p className="text-white/60 text-xs mt-2">
