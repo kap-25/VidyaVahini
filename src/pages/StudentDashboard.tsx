@@ -98,7 +98,7 @@ const StudentDashboard = () => {
         />
         
         {/* Navigation Menu */}
-        <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="mb-8">
+        <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="mb-6">
           <DashboardNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
           
           {/* Tab Contents */}
