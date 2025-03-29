@@ -11,7 +11,7 @@ const AssignmentsTab: React.FC<AssignmentsTabProps> = ({ assignments }) => {
   return (
     <div className="space-y-4">
       <Card className="bg-edu-card-bg border-none">
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-row-2 items-center justify-between">
           <div>
             <CardTitle>Assignments & Quizzes</CardTitle>
             <CardDescription className="text-gray-400">Track your academic tasks</CardDescription>
@@ -49,12 +49,12 @@ const AssignmentsTab: React.FC<AssignmentsTabProps> = ({ assignments }) => {
                   </div>
                 </div>
                 {assignment.status !== 'completed' && (
-                  <div className="mt-3 flex gap-2 justify-end">
-                    <Button size="sm" variant="outline">
+                  <div className="mt-4 flex gap-1 justify-end">
+                    <Button size="sm" variant="outline" className='w-22 h-10'>
                       View Details
                     </Button>
                     {assignment.status === 'pending' && (
-                      <Button size="sm" variant="default" className="bg-edu-purple hover:bg-edu-purple-light">
+                      <Button size="sm" variant="default" className="bg-edu-purple w-20 hover:bg-edu-purple-light">
                         Start Work
                       </Button>
                     )}
