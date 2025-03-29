@@ -20,9 +20,9 @@ interface AnalyticsTabProps {
   performanceData: any[];
 }
 
-const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ 
-  learningData, 
-  performanceData 
+const AnalyticsTab: React.FC<AnalyticsTabProps> = ({
+  learningData,
+  performanceData
 }) => {
   return (
     <div className="space-y-4">
@@ -40,7 +40,7 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({
                   <BarChart data={learningData}>
                     <XAxis dataKey="month" stroke="#9b87f5" />
                     <YAxis stroke="#9b87f5" />
-                    <Tooltip 
+                    <Tooltip
                       contentStyle={{ backgroundColor: '#1A1F2C', border: 'none' }}
                       labelStyle={{ color: '#fff' }}
                     />
@@ -57,7 +57,7 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({
                     <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                     <XAxis dataKey="subject" stroke="#9b87f5" />
                     <YAxis stroke="#9b87f5" />
-                    <Tooltip 
+                    <Tooltip
                       contentStyle={{ backgroundColor: '#1A1F2C', border: 'none' }}
                       labelStyle={{ color: '#fff' }}
                     />
@@ -67,28 +67,29 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({
               </div>
             </div>
           </div>
-          
-          <div className="flex justify-between mt-6 bg-edu-dark/30 p-4 rounded-lg">
-            <div className="text-center p-3">
+
+          <div className="grid grid-cols-2 gap-4 mt-6 bg-edu-dark/30 p-2 rounded-lg">
+            <div className="text-center p-3 border-2 rounded">
               <p className="text-gray-400 text-sm">Total Study Hours</p>
               <p className="text-2xl font-bold text-edu-purple">87</p>
             </div>
-            <div className="text-center p-3">
+            <div className="text-center p-3 border-2 rounded">
               <p className="text-gray-400 text-sm">Completed Tasks</p>
               <p className="text-2xl font-bold text-edu-purple">24</p>
             </div>
-            <div className="text-center p-3">
+            <div className="text-center p-3 border-2 rounded">
               <p className="text-gray-400 text-sm">Average Score</p>
               <p className="text-2xl font-bold text-edu-purple">78%</p>
             </div>
-            <div className="text-center p-3">
+            <div className="text-center p-3 border-2 rounded">
               <p className="text-gray-400 text-sm">Streak</p>
               <p className="text-2xl font-bold text-edu-purple">12</p>
             </div>
           </div>
+
         </CardContent>
       </Card>
-      
+
       <Card className="bg-edu-card-bg border-none">
         <CardHeader>
           <CardTitle>Learning Insights</CardTitle>
@@ -121,7 +122,7 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({
               </div>
             </div>
           </div>
-          
+
           <div className="p-4 bg-edu-dark/30 rounded-lg">
             <h3 className="text-sm font-medium mb-2">Productivity Insights</h3>
             <p className="text-sm text-gray-200">
