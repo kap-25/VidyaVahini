@@ -137,7 +137,7 @@ const MaterialsTab = () => {
   return (
     <div className="space-y-4">
       <Card className="bg-edu-card-bg border-none">
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-row-2 items-center justify-between">
           <div>
             <CardTitle>Learning Materials</CardTitle>
             <CardDescription className="text-gray-400">
