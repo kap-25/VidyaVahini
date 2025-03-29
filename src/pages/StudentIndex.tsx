@@ -122,9 +122,9 @@ const StudentIndex = () => {
             />
           </p>
           
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-col gap-2">
             <Link to="/student-dashboard">
-              <Button className="bg-white text-edu-purple hover:bg-white/90">
+              <Button className="bg-white text-edu-purple justify-center hover:bg-white/90">
                 <LayoutDashboard className="mr-2 h-4 w-4" />
                 <T>Student Dashboard</T>
               </Button>
@@ -139,34 +139,6 @@ const StudentIndex = () => {
             recentCourses={enrolledCourses.length > 0 ? enrolledCourses : defaultCourses}
             upcomingAssignments={assignments}
           />
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-bold mb-4"><T>Continue Learning</T></h2>
-          {(enrolledCourses.length > 0 ? enrolledCourses : defaultCourses).map(course => (
-            <CourseCard 
-              key={course.id}
-              title={course.title}
-              progress={course.progress}
-              timeLeft={course.timeLeft}
-              className="mb-3"
-            />
-          ))}
-        </div>
-
-        <div className="mb-10">
-          <h2 className="text-xl font-bold mb-4"><T>Recommended for You</T></h2>
-          <div className="grid grid-cols-2 gap-4">
-            {recommendedCourses.map(course => (
-              <RecommendedCourseCard 
-                key={course.id}
-                title={course.title}
-                description={course.description}
-                duration={course.duration}
-                imageUrl={course.imageUrl}
-              />
-            ))}
-          </div>
         </div>
       </div>
 
