@@ -459,7 +459,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Create New Course</CardTitle>
-                <CardDescription className="text-gray-400 mt-4">Set up a new course before uploading materials</CardDescription>
+                <CardDescription className="text-gray-400">Set up a new course before uploading materials</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleCreateCourse} className="space-y-4">
@@ -493,7 +493,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Upload Course Materials</CardTitle>
-                <CardDescription className="text-gray-400 mt-4">Upload videos, PDFs, and other learning materials</CardDescription>
+                <CardDescription className="text-gray-400">Upload videos, PDFs, and other learning materials</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleUpload} className="space-y-4">
@@ -521,7 +521,7 @@ const EducatorDashboard = () => {
                   
                   <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
                     <Upload className="mx-auto h-10 w-10 text-gray-400" />
-                    <p className="mt-2 text-sm text-gray-400 mt-4">Drag and drop files here, or click to browse</p>
+                    <p className="mt-2 text-sm text-gray-400">Drag and drop files here, or click to browse</p>
                     <input 
                       id="file-upload" 
                       type="file" 
@@ -580,7 +580,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Your Course Materials</CardTitle>
-                <CardDescription className="text-gray-400 mt-4">
+                <CardDescription className="text-gray-400">
                   All your uploaded learning resources
                 </CardDescription>
               </CardHeader>
@@ -654,7 +654,7 @@ const EducatorDashboard = () => {
               <CardHeader className="flex flex-col items-center justify-between">
                 <div>
                   <CardTitle>Manage Enrolled Students</CardTitle>
-                  <CardDescription className="text-gray-400 mt-4">View and manage your student roster</CardDescription>
+                  <CardDescription className="text-gray-400">View and manage your student roster</CardDescription>
                 </div>
                 <div className="flex items-center">
                   <Input placeholder="Search students..." className="mr-2 bg-edu-dark/50 w-40 md:w-60" />
@@ -693,7 +693,7 @@ const EducatorDashboard = () => {
               <CardHeader className="flex flex-col items-center justify-between">
                 <div>
                   <CardTitle>Create Assignments & Quizzes</CardTitle>
-                  <CardDescription className="text-gray-400 mt-4">Design and publish assessments for your students</CardDescription>
+                  <CardDescription className="text-gray-400">Design and publish assessments for your students</CardDescription>
                 </div>
                 <Button size="sm">
                   <Plus size={16} className="mr-1" />
@@ -743,7 +743,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Course Analytics & Student Progress</CardTitle>
-                <CardDescription className="text-gray-400 mt-4">Track student engagement and course performance</CardDescription>
+                <CardDescription className="text-gray-400">Track student engagement and course performance</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -781,7 +781,7 @@ const EducatorDashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between mt-6 bg-edu-dark/30 p-4 rounded-lg">
+                <div className="grid grid-cols-2 mt-6 bg-edu-dark/30 p-4 rounded-lg">
                   <div className="text-center p-3">
                     <p className="text-gray-400 text-sm">Total Students</p>
                     <p className="text-2xl font-bold text-edu-purple">156</p>
@@ -807,7 +807,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Discussion & Q&A Moderation</CardTitle>
-                <CardDescription className="text-gray-400 mt-4">Manage student discussions and questions</CardDescription>
+                <CardDescription className="text-gray-400">Manage student discussions and questions</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -827,7 +827,7 @@ const EducatorDashboard = () => {
                         </span>
                       </div>
                       <p className="mt-2 text-gray-200">{discussion.content}</p>
-                      <div className="flex gap-2 mt-4">
+                      <div className="flex flex-row gap-0 mt-4">
                         {discussion.status === 'pending' && (
                           <>
                             <Button 
