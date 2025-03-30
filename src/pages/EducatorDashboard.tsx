@@ -432,7 +432,7 @@ const EducatorDashboard = () => {
         />
         
         <Tabs defaultValue="upload" value={activeTab} onValueChange={setActiveTab} className="mb-8">
-          <TabsList className="grid grid-cols-5 bg-edu-card-bg mb-6">
+          <TabsList className="grid h-40 grid-cols-3 bg-edu-card-bg mb-6">
             <TabsTrigger value="upload" className="flex flex-col items-center gap-1 py-3">
               <Upload size={18} />
               <span className="text-xs">Upload</span>
@@ -459,7 +459,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Create New Course</CardTitle>
-                <CardDescription className="text-gray-400">Set up a new course before uploading materials</CardDescription>
+                <CardDescription className="text-gray-400 mt-4">Set up a new course before uploading materials</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleCreateCourse} className="space-y-4">
@@ -493,7 +493,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Upload Course Materials</CardTitle>
-                <CardDescription className="text-gray-400">Upload videos, PDFs, and other learning materials</CardDescription>
+                <CardDescription className="text-gray-400 mt-4">Upload videos, PDFs, and other learning materials</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleUpload} className="space-y-4">
@@ -521,7 +521,7 @@ const EducatorDashboard = () => {
                   
                   <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
                     <Upload className="mx-auto h-10 w-10 text-gray-400" />
-                    <p className="mt-2 text-sm text-gray-400">Drag and drop files here, or click to browse</p>
+                    <p className="mt-2 text-sm text-gray-400 mt-4">Drag and drop files here, or click to browse</p>
                     <input 
                       id="file-upload" 
                       type="file" 
@@ -580,7 +580,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Your Course Materials</CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription className="text-gray-400 mt-4">
                   All your uploaded learning resources
                 </CardDescription>
               </CardHeader>
@@ -651,10 +651,10 @@ const EducatorDashboard = () => {
           
           <TabsContent value="students" className="space-y-4">
             <Card className="bg-edu-card-bg border-none">
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader className="flex flex-col items-center justify-between">
                 <div>
                   <CardTitle>Manage Enrolled Students</CardTitle>
-                  <CardDescription className="text-gray-400">View and manage your student roster</CardDescription>
+                  <CardDescription className="text-gray-400 mt-4">View and manage your student roster</CardDescription>
                 </div>
                 <div className="flex items-center">
                   <Input placeholder="Search students..." className="mr-2 bg-edu-dark/50 w-40 md:w-60" />
@@ -666,13 +666,13 @@ const EducatorDashboard = () => {
               <CardContent>
                 <div className="space-y-4">
                   {students.map(student => (
-                    <div key={student.id} className="flex items-center justify-between p-3 bg-edu-dark/30 rounded-lg">
+                    <div key={student.id} className="flex flex-col items-center justify-center p-3 bg-edu-dark/30 rounded-lg">
                       <div>
                         <h3 className="font-medium">{student.name}</h3>
                         <p className="text-sm text-gray-400">{student.email}</p>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-32">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-40">
                           <div className="flex justify-between text-xs mb-1">
                             <span>Progress</span>
                             <span>{student.progress}%</span>
@@ -690,10 +690,10 @@ const EducatorDashboard = () => {
           
           <TabsContent value="assignments" className="space-y-4">
             <Card className="bg-edu-card-bg border-none">
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader className="flex flex-col items-center justify-between">
                 <div>
                   <CardTitle>Create Assignments & Quizzes</CardTitle>
-                  <CardDescription className="text-gray-400">Design and publish assessments for your students</CardDescription>
+                  <CardDescription className="text-gray-400 mt-4">Design and publish assessments for your students</CardDescription>
                 </div>
                 <Button size="sm">
                   <Plus size={16} className="mr-1" />
@@ -743,7 +743,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Course Analytics & Student Progress</CardTitle>
-                <CardDescription className="text-gray-400">Track student engagement and course performance</CardDescription>
+                <CardDescription className="text-gray-400 mt-4">Track student engagement and course performance</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -807,7 +807,7 @@ const EducatorDashboard = () => {
             <Card className="bg-edu-card-bg border-none">
               <CardHeader>
                 <CardTitle>Discussion & Q&A Moderation</CardTitle>
-                <CardDescription className="text-gray-400">Manage student discussions and questions</CardDescription>
+                <CardDescription className="text-gray-400 mt-4">Manage student discussions and questions</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
