@@ -108,7 +108,7 @@ const EducatorIndex = () => {
             </T>
           </p>
           
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 flex justify-center flex-wrap gap-2">
             <Link to="/educator-dashboard">
               <Button className="bg-white text-edu-purple hover:bg-white/90">
                 <GraduationCap className="mr-2 h-4 w-4" />
