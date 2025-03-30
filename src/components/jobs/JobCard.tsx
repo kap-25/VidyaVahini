@@ -117,7 +117,7 @@ const JobCard: React.FC<JobCardProps> = ({
           <span className="inline-block h-3 w-3 bg-edu-purple rounded-full animate-pulse"></span>
         </div>
       )}
-      <div className="flex justify-between items-start mb-2">
+      <div className="flex justify-center items-center mb-2">
         <div>
           <span className="inline-block px-2 py-1 bg-edu-purple/20 text-xs rounded mb-2">
             {job.type.charAt(0).toUpperCase() + job.type.slice(1)}
