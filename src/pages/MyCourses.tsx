@@ -54,7 +54,7 @@ const MyCourses = () => {
   return (
     <div className="min-h-screen bg-edu-dark text-white pb-20">
       <div className="max-w-md mx-auto px-4 pt-6">
-        <Header />
+        <Header showBackButton/>
         
         <div className="my-6">
           <h1 className="text-2xl font-bold mb-2">My Courses</h1>
