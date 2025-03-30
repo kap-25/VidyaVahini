@@ -233,9 +233,9 @@ const EmployerApplicants = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <Header showBackButton>
-        <h1 className="text-xl font-bold"><T>Applicants</T></h1>
-      </Header>
+      <Header showBackButton />
+        <h1 className="text-2xl font-bold"><T>Applicants</T></h1>
+      
       
       <div className="max-w-4xl mx-auto px-4 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
