@@ -66,13 +66,12 @@ const EducatorProfile = () => {
   return (
     <div className="min-h-screen bg-edu-dark text-white pb-20">
       <div className="max-w-md mx-auto px-4 pt-6">
-        <Header />
+        <Header showBackButton/>
         
         <div className="bg-edu-card-bg rounded-xl p-6 mt-8">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold"><T>Educator Profile</T></h1>
             <div className="flex gap-2">
-              <FullLanguageSwitcher variant="ghost" size="sm" />
               <Button 
                 variant="ghost" 
                 size="sm" 
