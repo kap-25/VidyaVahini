@@ -46,10 +46,10 @@ const JobsPage = () => {
 
   return (
     <div className="min-h-screen bg-edu-dark text-white pb-20">
-      <div className="max-w-md mx-auto px-4 pt-6">
+      <div className="max-w-md mx-auto px-4 pt-0">
         <Header showBackButton={true} />
 
-        <div className="mt-6 mb-8">
+        <div className="mt-2 mb-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold"><T>Job Opportunities</T></h1>
             
