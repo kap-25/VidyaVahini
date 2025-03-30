@@ -115,7 +115,6 @@ const EducatorIndex = () => {
                 <T>Educator Dashboard</T>
               </Button>
             </Link>
-            <FullLanguageSwitcher variant="outline" />
           </div>
         </div>
 
@@ -132,21 +131,6 @@ const EducatorIndex = () => {
               className="mb-3"
             />
           ))}
-        </div>
-
-        <div className="mb-10">
-          <h2 className="text-xl font-bold mb-4"><T>Teaching Resources</T></h2>
-          <div className="grid grid-cols-2 gap-4">
-            {recommendedResources.map(resource => (
-              <RecommendedCourseCard 
-                key={resource.id}
-                title={resource.title}
-                description={resource.description}
-                duration={resource.duration}
-                imageUrl={resource.imageUrl}
-              />
-            ))}
-          </div>
         </div>
       </div>
 
