@@ -50,8 +50,8 @@ const JobsPage = () => {
         <Header showBackButton={true} />
 
         <div className="mt-2 mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold"><T>Job Opportunities</T></h1>
+          <div className="flex flex-col justify-center items-center mb-8">
+            <h1 className="text-2xl mb-6 font-bold"><T>Job Opportunities</T></h1>
             
             {isEmployer && (
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
