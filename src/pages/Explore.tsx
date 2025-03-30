@@ -284,10 +284,7 @@ const Explore = () => {
   return (
     <div className="min-h-screen bg-edu-dark text-white pb-20">
       <div className="max-w-md mx-auto px-4 pt-6">
-        <div className="flex justify-between items-center">
-          <Header />
-          <FullLanguageSwitcher variant="ghost" size="icon" />
-        </div>
+        <Header showBackButton/>
         
         <div className="my-6">
           <h1 className="text-2xl font-bold mb-2"><TranslatedText text="Explore Courses" /></h1>
