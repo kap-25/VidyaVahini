@@ -160,7 +160,6 @@ const StudentProfile = () => {
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold"><T>Student Profile</T></h1>
             <div className="flex gap-2">
-              <FullLanguageSwitcher variant="ghost" size="sm" />
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -194,7 +193,7 @@ const StudentProfile = () => {
 
           {/* Added Reminder Section */}
           <div className="mb-6 bg-edu-dark/30 p-4 rounded-lg">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex flex-col items-center justify-between mb-2">
               <label className="text-sm font-medium flex items-center">
                 <Bell className="mr-2 text-white h-5 w-5" /> <T>Daily Study Reminder</T>
               </label>
