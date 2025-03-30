@@ -610,15 +610,14 @@ const EducationalChatbot: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-edu-dark text-white relative">
-      <Header />
+    <div className="min-h-screenbg-edu-dark text-white relative">
       
-      <div className="pb-20 pt-16">
-        <div className="max-w-4xl mx-auto px-4 flex flex-col md:flex-row gap-4">
+      <div className="pb-16 pt-0">
+        <div className="max-w-full mx-auto px-0 flex flex-col md:flex-row gap-2">
           {/* Main Chat Area */}
-          <div className="w-full md:flex-1 flex flex-col h-[calc(100vh-9rem)]">
+          <div className="w-full md:flex-1 flex flex-col h-[calc(108vh-10rem)]">
             <PageTranslationHeader>
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center mb-0">
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -627,7 +626,7 @@ const EducationalChatbot: React.FC = () => {
                 >
                   <ArrowLeft size={24} />
                 </Button>
-                <h1 className="text-xl font-semibold flex items-center">
+                <h1 className="text-lg font-semibold flex items-center">
                   <Book className="mr-2 text-edu-purple" />
                   <T>Educational AI Tutor</T>
                 </h1>
@@ -636,7 +635,7 @@ const EducationalChatbot: React.FC = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setShowSidebar(!showSidebar)}
-                  className="md:hidden text-white hover:bg-gray-800"
+                  className="md:hidden text-white justify-end hover:bg-gray-800"
                 >
                   <PanelRight size={20} />
                 </Button>
@@ -675,7 +674,7 @@ const EducationalChatbot: React.FC = () => {
                     </div>
                   ) : (
                     <>
-                      <div className="space-y-2 min-h-full">
+                      <div className="space-y-16 min-h-full">
                         {messages.map((message, i) => (
                           <MessageBubble key={i} message={message} />
                         ))}
@@ -685,7 +684,7 @@ const EducationalChatbot: React.FC = () => {
                             <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center">
                               <Bot size={18} className="text-white" />
                             </div>
-                            <div className="max-w-[85%] p-4 rounded-lg bg-gray-700 text-white rounded-tl-none">
+                            <div className="max-w-[85%] rounded-lg bg-gray-700 text-white rounded-tl-none">
                               <div className="flex space-x-2">
                                 <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>
                                 <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce delay-100"></div>
@@ -713,12 +712,12 @@ const EducationalChatbot: React.FC = () => {
                   onSubmit={handleSubmit} 
                   className="bg-gray-900 border-t border-gray-700 p-3 rounded-b-xl"
                 >
-                  <div className="relative">
+                  <div className="relative mr-6">
                     <Textarea 
                       value={input} 
                       onChange={(e) => setInput(e.target.value)} 
                       placeholder="Ask me about any subject..." 
-                      className="min-h-[60px] max-h-[150px] w-full bg-gray-800 text-white border-gray-700 focus:border-edu-purple resize-none pr-36 rounded-lg"
+                      className="min-h-[40px] max-h-[200px] mb-3 w-full bg-gray-800 text-white border-gray-700 focus:border-edu-purple resize-none rounded-lg"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && !e.shiftKey) {
                           e.preventDefault();
@@ -727,7 +726,7 @@ const EducationalChatbot: React.FC = () => {
                       }}
                       disabled={isLoading} 
                     />
-                    <div className="absolute right-2 bottom-2 flex gap-2">
+                    <div className="relative w-full flex flex-row gap-2">
                       <Button
                         type="button"
                         onClick={triggerImageUpload}
