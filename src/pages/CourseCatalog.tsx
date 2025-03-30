@@ -65,7 +65,7 @@ const CourseCatalog = () => {
   return (
     <div className="min-h-screen bg-edu-dark text-white pb-20">
       <div className="max-w-md mx-auto px-4 pt-6">
-        <Header />
+        <Header showBackButton/>
         
         {/* Search Bar Component */}
         <SearchBar 
