@@ -59,73 +59,152 @@ const StudentProfile = () => {
   const [completedCourses, setCompletedCourses] = useState(0);
   const [reminderTime, setReminderTime] = useState(localStorage.getItem('reminderTime') || '');
   const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
-  
+  const [notificationScheduled, setNotificationScheduled] = useState(false);
+
+  // Pre-load audio and handle errors
+  const [notificationSound] = useState(() => {
+    const audio = new Audio('/audio.mp3');
+    audio.preload = 'auto';
+    audio.volume = 1.0;
+    
+    // Handle loading errors
+    audio.onerror = () => {
+      console.error('Error loading notification sound');
+      toast.error('Failed to load notification sound');
+    };
+    
+    return audio;
+  });
+
   useEffect(() => {
     if (!user) return;
     
     const fetchStudentData = async () => {
       setLoading(true);
       try {
-        // Fetch enrolled courses
         const { data: userCourses, error: coursesError } = await supabase
           .from('user_courses')
           .select('*, courses(*)')
           .eq('user_id', user.id);
         
         if (coursesError) throw coursesError;
-        
         setEnrolledCourses(userCourses || []);
         
-        // Just for demo - set a random number of completed courses
+        // Calculate completed courses based on progress (you should implement proper logic)
         setCompletedCourses(Math.min(userCourses?.length || 0, Math.floor(Math.random() * 3)));
-        
       } catch (error: any) {
         console.error('Error fetching student data:', error.message);
+        toast.error('Failed to fetch your courses');
       } finally {
         setLoading(false);
       }
     };
     
     fetchStudentData();
-    requestNotificationPermission();
+    
+    // Check if notifications are already enabled
+    if ('Notification' in window) {
+      setNotificationPermission(Notification.permission);
+    }
   }, [user]);
 
   const requestNotificationPermission = async () => {
     try {
+      // First check if the browser supports notifications
+      if (!('Notification' in window)) {
+        toast.error('Your browser does not support notifications');
+        return;
+      }
+
+      // Request permission
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
+      
       if (permission === 'granted') {
         toast.success('Notifications enabled! You\'ll receive study reminders.');
+        // Send a test notification
+        new Notification('Notifications Enabled!', {
+          body: 'You will now receive study reminders at your scheduled time.',
+          icon: '/favicon.ico'
+        });
+      } else if (permission === 'denied') {
+        toast.error('Please enable notifications in your browser settings to receive reminders');
+      } else {
+        toast.info('Please allow notifications when prompted');
       }
     } catch (error) {
       console.error('Error requesting notification permission:', error);
+      toast.error('Failed to enable notifications');
     }
   };
 
   useEffect(() => {
-    if (!reminderTime || notificationPermission !== 'granted') return;
+    if (!reminderTime || notificationPermission !== 'granted') {
+      setNotificationScheduled(false);
+      return;
+    }
 
     const checkReminder = setInterval(() => {
       const now = new Date();
-      const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+      const currentTime = now.toLocaleTimeString('en-US', { 
+        hour12: false, 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
 
-      if (currentTime === reminderTime) {
+      if (currentTime === reminderTime && !notificationScheduled) {
+        setNotificationScheduled(true);
         const message = getRandomMessage();
-        new Notification(message.title, {
-          body: message.body,
-          icon: '/favicon.ico',
-          badge: '/favicon.ico',
-          tag: 'study-reminder',
-        });
+        
+        // Play audio and show notification with retry mechanism
+        const playNotification = async (retries = 3) => {
+          try {
+            // Reset audio to start
+            notificationSound.currentTime = 0;
+            
+            // Play with retry mechanism
+            const playPromise = notificationSound.play();
+            if (playPromise !== undefined) {
+              await playPromise;
+              
+              // Vibrate if supported
+              if ('vibrate' in navigator) {
+                navigator.vibrate([200, 100, 200]);
+              }
+
+              // Show notification
+              new Notification(message.title, {
+                body: message.body,
+                icon: '/favicon.ico',
+                badge: '/favicon.ico',
+                tag: 'study-reminder',
+                silent: false,
+              });
+            }
+          } catch (error) {
+            console.error('Notification sound error:', error);
+            if (retries > 0) {
+              setTimeout(() => playNotification(retries - 1), 1000);
+            } else {
+              toast.error('Failed to play notification sound');
+            }
+          }
+        };
+
+        playNotification();
+
+        // Reset the scheduled flag after 1 minute
+        setTimeout(() => setNotificationScheduled(false), 60000);
       }
-    }, 60000); // Check every minute
+    }, 1000);
 
     return () => clearInterval(checkReminder);
-  }, [reminderTime, notificationPermission]);
+  }, [reminderTime, notificationPermission, notificationScheduled, notificationSound]);
 
-  const handleReminderChange = (event) => {
+  const handleReminderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const time = event.target.value;
     setReminderTime(time);
+    setNotificationScheduled(false);
     localStorage.setItem('reminderTime', time);
 
     if (time) {
@@ -154,12 +233,13 @@ const StudentProfile = () => {
   return (
     <div className="min-h-screen bg-edu-dark text-white pb-20">
       <div className="max-w-md mx-auto px-4 pt-6">
-        <Header showBackButton/>
+        <Header />
         
         <div className="bg-edu-card-bg rounded-xl p-6 mt-8">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold"><T>Student Profile</T></h1>
             <div className="flex gap-2">
+              <FullLanguageSwitcher variant="ghost" size="sm" />
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -191,31 +271,43 @@ const StudentProfile = () => {
             </Card>
           </div>
 
-          {/* Added Reminder Section */}
           <div className="mb-6 bg-edu-dark/30 p-4 rounded-lg">
-            <div className="flex flex-col items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2">
               <label className="text-sm font-medium flex items-center">
                 <Bell className="mr-2 text-white h-5 w-5" /> <T>Daily Study Reminder</T>
               </label>
               {notificationPermission !== 'granted' && (
                 <Button
-                  variant="ghost"
+                  variant="secondary"
                   size="sm"
                   onClick={requestNotificationPermission}
-                  className="text-xs text-edu-purple hover:text-edu-purple/80"
+                  className="text-xs bg-edu-purple hover:bg-edu-purple/80"
                 >
+                  <Bell className="mr-2 h-4 w-4" />
                   <T>Enable Notifications</T>
                 </Button>
               )}
+            </div>
+            <div className="flex items-center gap-2 mb-2">
+              <div className={`w-2 h-2 rounded-full ${
+                notificationPermission === 'granted' ? 'bg-green-500' : 'bg-yellow-500'
+              }`} />
+              <span className="text-xs text-gray-400">
+                {notificationPermission === 'granted' ? 
+                  <T>Notifications are enabled</T> : 
+                  <T>Notifications are disabled</T>
+                }
+              </span>
             </div>
             <input
               type="time"
               value={reminderTime}
               onChange={handleReminderChange}
               className="w-full p-2 bg-edu-dark border border-gray-600 rounded mt-2"
+              disabled={notificationPermission !== 'granted'}
             />
             <p className="text-xs text-gray-400 mt-2">
-              {reminderTime
+              {reminderTime && notificationPermission === 'granted'
                 ? <T>{`You'll receive a study reminder at ${reminderTime} every day`}</T>
                 : <T>Set a time to receive daily study reminders</T>}
             </p>
