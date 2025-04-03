@@ -350,7 +350,7 @@ const Explore = () => {
                           <span>Course</span>
                           
                           {course.created_by && (
-                            <div className="flex items-center">
+                            <div className="flex gap-2 items-center">
                               <Users size={14} />
                               <span>
                                 By {creatorUsernames[course.created_by] || 'Unknown Teacher'}
