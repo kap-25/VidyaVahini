@@ -11,7 +11,7 @@ const Logo: React.FC<LogoProps> = ({ className, size = 24 }) => {
   return (
     <div className={`flex items-center ${className}`}>
       <GraduationCap size={size} className="mr-2 text-edu-purple" />
-      <span className="font-bold text-white">EduForAll</span>
+      <span className="font-bold text-white">VidyaVahini</span>
     </div>
   );
 };
