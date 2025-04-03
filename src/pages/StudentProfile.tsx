@@ -228,13 +228,12 @@ const StudentProfile = () => {
   return (
     <div className="min-h-screen bg-edu-dark text-white pb-20">
       <div className="max-w-md mx-auto px-4 pt-6">
-        <Header />
+        <Header showBackButton/>
         
         <div className="bg-edu-card-bg rounded-xl p-6 mt-8">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold"><T>Student Profile</T></h1>
             <div className="flex gap-2">
-              <FullLanguageSwitcher variant="ghost" size="sm" />
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -267,7 +266,7 @@ const StudentProfile = () => {
           </div>
 
           <div className="mb-6 bg-edu-dark/30 p-4 rounded-lg">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex flex-col gap-3 items-center justify-between mb-2">
               <label className="text-sm font-medium flex items-center">
                 <Bell className="mr-2 text-white h-5 w-5" /> <T>Daily Study Reminder</T>
               </label>
@@ -283,7 +282,7 @@ const StudentProfile = () => {
                 </Button>
               )}
             </div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex justify-center items-center gap-2 mb-2">
               <div className={`w-2 h-2 rounded-full ${
                 notificationPermission === 'granted' ? 'bg-green-500' : 'bg-yellow-500'
               }`} />
