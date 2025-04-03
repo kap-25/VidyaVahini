@@ -59,22 +59,26 @@ const StudentProfile = () => {
   const [completedCourses, setCompletedCourses] = useState(0);
   const [reminderTime, setReminderTime] = useState(localStorage.getItem('reminderTime') || '');
   const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
-  const [notificationScheduled, setNotificationScheduled] = useState(false);
-
-  // Pre-load audio and handle errors
-  const [notificationSound] = useState(() => {
+  const [audio] = useState(() => {
     const audio = new Audio('/audio.mp3');
     audio.preload = 'auto';
     audio.volume = 1.0;
-    
-    // Handle loading errors
-    audio.onerror = () => {
-      console.error('Error loading notification sound');
-      toast.error('Failed to load notification sound');
-    };
-    
     return audio;
   });
+  const [notificationScheduled, setNotificationScheduled] = useState(false);
+
+  const playNotificationSound = async () => {
+    try {
+      // Reset audio to start
+      audio.currentTime = 0;
+      // Create a promise to handle audio play
+      await audio.play();
+      return true;
+    } catch (error) {
+      console.error('Error playing notification sound:', error);
+      return false;
+    }
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -156,38 +160,29 @@ const StudentProfile = () => {
         setNotificationScheduled(true);
         const message = getRandomMessage();
         
-        // Play audio and show notification with retry mechanism
-        const playNotification = async (retries = 3) => {
+        // Play audio and show notification
+        const playNotification = async () => {
           try {
-            // Reset audio to start
-            notificationSound.currentTime = 0;
+            // Try to play the notification sound
+            await playNotificationSound();
             
-            // Play with retry mechanism
-            const playPromise = notificationSound.play();
-            if (playPromise !== undefined) {
-              await playPromise;
-              
-              // Vibrate if supported
-              if ('vibrate' in navigator) {
-                navigator.vibrate([200, 100, 200]);
-              }
+            // Vibrate if supported
+            if ('vibrate' in navigator) {
+              navigator.vibrate([200, 100, 200]);
+            }
 
-              // Show notification
-              new Notification(message.title, {
-                body: message.body,
-                icon: '/favicon.ico',
-                badge: '/favicon.ico',
-                tag: 'study-reminder',
-                silent: false,
-              });
-            }
+            // Show notification
+            new Notification(message.title, {
+              body: message.body,
+              icon: '/favicon.ico',
+              badge: '/favicon.ico',
+              tag: 'study-reminder',
+              silent: true, // We're handling the sound manually
+            });
+
           } catch (error) {
-            console.error('Notification sound error:', error);
-            if (retries > 0) {
-              setTimeout(() => playNotification(retries - 1), 1000);
-            } else {
-              toast.error('Failed to play notification sound');
-            }
+            console.error('Notification error:', error);
+            toast.error('Failed to play notification sound');
           }
         };
 
@@ -196,10 +191,10 @@ const StudentProfile = () => {
         // Reset the scheduled flag after 1 minute
         setTimeout(() => setNotificationScheduled(false), 60000);
       }
-    }, 1000);
+    }, 1000); // Check every second instead of 30 seconds for more precision
 
     return () => clearInterval(checkReminder);
-  }, [reminderTime, notificationPermission, notificationScheduled, notificationSound]);
+  }, [reminderTime, notificationPermission, notificationScheduled]);
 
   const handleReminderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const time = event.target.value;
