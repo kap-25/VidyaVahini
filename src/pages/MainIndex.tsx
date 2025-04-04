@@ -30,6 +30,9 @@ const MainIndex = () => {
         <Link to="/auth?mode=signup">
           <Button size={isMobile ? "sm" : "default"} className="bg-primary hover:bg-primary/90">Log In</Button>
         </Link>
+        <Link to="/auth?mode=register">
+          <Button size={isMobile ? "sm" : "default"} className="bg-secondary hover:bg-secondary/90">Sign Up</Button>
+        </Link>
       </div>
     </header>
 

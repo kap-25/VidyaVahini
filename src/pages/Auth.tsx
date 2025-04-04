@@ -45,6 +45,10 @@ const Auth: React.FC = () => {
   
   const from = location.state?.from?.pathname || '/';
 
+  const handleBack = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     if (user) {
       const userRole = user.user_metadata?.role;
@@ -165,7 +169,10 @@ const Auth: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-edu-dark">
-      <div className="flex items-center justify-center p-4 md:p-8">
+      <div className="flex items-center justify-between p-4 md:p-8">
+        <button onClick={handleBack} className="text-white bg-edu-purple px-4 py-2 rounded">
+          Back
+        </button>
         <Logo size={36} />
       </div>
       
