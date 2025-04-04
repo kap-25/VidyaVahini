@@ -49,14 +49,14 @@ const JobFormDialog: React.FC<JobFormDialogProps> = ({
       <DialogContent className="bg-edu-card-bg text-white border-edu-card-bg sm:max-w-md max-h-[90vh]">
         <ScrollArea className="max-h-[calc(90vh-80px)]">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className='ml-4'>
               {editingId ? <T>Edit Job Material</T> : <T>Add New Job Material</T>}
             </DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogDescription className="ml-4 text-gray-400">
               <T>Fill in the details for this job opportunity</T>
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={onSubmit} className="space-y-4 mt-4">
+          <form onSubmit={onSubmit} className="space-y-4 p-4 mt-4">
             <div>
               <label htmlFor="title" className="block text-sm font-medium mb-1">
                 <T>Title</T> *
