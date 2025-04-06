@@ -135,6 +135,13 @@ graph TD
   E --> G[Personalized Content]
   F --> H[Employer Portal]
 ```
+-Frontend:
+  -React + TypeScript
+  -shadcn-ui Component Library
+  -Tailwind CSS + Radix UI
+
+-Backend:
+  -Supabase (PostgreSQL)
 
 ## How can I edit this code?
 
