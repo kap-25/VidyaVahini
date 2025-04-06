@@ -134,10 +134,11 @@ graph TD
   D --> F[Analytics Dashboard]
   E --> G[Personalized Content]
   F --> H[Employer Portal]
+```
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
-
 
 **Use your preferred IDE**
 
