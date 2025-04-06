@@ -1,6 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import { FaCaretDown } from 'react-icons/fa';
 import CourseLearn from '@/pages/CourseLearn';
 import CourseLearnEdit from '@/pages/CourseLearnEdit';
 import CourseDetails from '@/pages/CourseDetails';
@@ -33,55 +31,10 @@ import Index from './pages/Index';
 import VoiceAssistant from './components/VoiceAssistant';
 import AiChatBox from './components/AiChatBox';
 import TranslationWrapper from './components/TranslationWrapper';
-import { ThemeProvider, useTheme } from '@/context/ThemeContext';
-import '@/styles/themes.css';
-import './styles/globals.css';
 
-function AppContent() {
-  const { theme, onThemeChange } = useTheme();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const themes = [
-    { name: 'Light', value: 'light' },
-    { name: 'Dark', value: 'dark' },
-    { name: 'Blue', value: 'blue' },
-    { name: 'Red', value: 'red' },
-    { name: 'Orange', value: 'orange' },
-    { name: 'Purple', value: 'purple' },
-  ];
-
+function App() {
   return (
-    <div className={`${theme} min-h-screen transition-colors duration-200`}>
-      <div className={`theme-controls fixed top-4 right-4 z-50 p-3 rounded-lg backdrop-blur-sm ${
-        theme === 'dark' ? 'bg-gray-800/90' : 'bg-white/90'
-      } shadow-lg border border-gray-200 dark:border-gray-700`}>
-        <div className="relative">
-          <button
-            className="px-4 py-2 rounded-md transition-all duration-200 font-medium flex items-center gap-2 bg-gray-200 dark:bg-gray-700"
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            Select Theme <FaCaretDown />
-          </button>
-          {dropdownOpen && (
-            <ul className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-lg rounded-md overflow-hidden">
-              {themes.map((t) => (
-                <li
-                  key={t.value}
-                  className={`px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                    theme === t.value ? 'font-bold' : ''
-                  }`}
-                  onClick={() => {
-                    onThemeChange(t.value);
-                    setDropdownOpen(false);
-                  }}
-                >
-                  {t.name}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
+    <div >      
       <Router>
         <AuthProvider>
           <LanguageProvider>
@@ -131,14 +84,6 @@ function AppContent() {
         </AuthProvider>
       </Router>
     </div>
-  );
-}
-
-function App() {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
   );
 }
 
